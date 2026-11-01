@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قيّم نفسك - المعلم الخارق</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f5f7fb;margin:0;padding:20px;color:#222}
+.container{max-width:700px;margin:auto;background:#fff;padding:24px;border-radius:18px;box-shadow:0 4px 18px rgba(0,0,0,.08)}
+h1{text-align:center;margin-bottom:8px}.intro{text-align:center;color:#666;margin-bottom:24px}
+.q{padding:16px;margin:12px 0;background:#f8f9fc;border-radius:12px}
+.options{display:flex;gap:10px;margin-top:10px}.options label{flex:1;text-align:center;padding:10px;background:#fff;border:1px solid #ddd;border-radius:10px;cursor:pointer}
+button{width:100%;padding:14px;border:0;border-radius:12px;background:#333;color:#fff;font-size:18px;margin-top:20px;cursor:pointer}
+#result{display:none;margin-top:20px;padding:18px;border-radius:12px;background:#eef6ff;text-align:center;font-size:18px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>✨ قيّم نفسك: هل أنت معلم خارق؟</h1>
+<p class="intro">أجب عن الأسئلة الـ15 بـ نعم أو لا، ثم اضغط «احسب النتيجة».</p>
+<form id="quiz"></form>
+<button type="button" onclick="calculate()">احسب النتيجة</button>
+<div id="result"></div>
+</div>
+<script>
+const questions=[
+"أستطيع التكيف مع احتياجات الطلاب المختلفة.",
+"أحرص على بناء بيئة صفية إيجابية ومريحة.",
+"أتعاون مع زملائي وأتبادل معهم الخبرات والأفكار.",
+"أهتم بالجانب الشخصي والنفسي للطالب.",
+"أستطيع تنظيم وقتي وإدارة مهامي بفعالية.",
+"أستخدم طرقًا مبتكرة ومتنوعة في التدريس.",
+"أستطيع التعامل مع ضغوط العمل والتوقعات المختلفة.",
+"أستفيد من الموارد والإمكانيات المتاحة حتى لو كانت محدودة.",
+"أستمع إلى الطلاب وأتفهم احتياجاتهم ومشاعرهم.",
+"أحرص على التعلم والتطوير المستمر لمهاراتي.",
+"أحرص أن أكون قدوة حسنة لطلابي.",
+"أستطيع حل المشكلات التي تظهر داخل الصف.",
+"أحافظ على إيجابيتي وحبي للعمل.",
+"أتواصل بفعالية مع الطلاب وأولياء الأمور والزملاء.",
+"أشجع طلابي على الإبداع والتفكير النقدي."
+];
+const quiz=document.getElementById('quiz');
+questions.forEach((q,i)=>{
+quiz.innerHTML+=`<div class="q"><strong>${i+1}. ${q}</strong><div class="options">
+<label><input type="radio" name="q${i}" value="1"> نعم</label>
+<label><input type="radio" name="q${i}" value="0"> لا</label>
+</div></div>`;
+});
+function calculate(){
+let score=0;
+for(let i=0;i<questions.length;i++){
+const a=document.querySelector(`input[name="q${i}"]:checked`);
+if(!a){alert("فضلاً أجب عن جميع الأسئلة الـ15 قبل حساب النتيجة.");return;}
+score+=Number(a.value);
+}
+let text;
+if(score>=12) text=`أنت معلم خارق! ✨<br>أنت تملك صفات المعلم الخارق وتترك أثرًا إيجابيًا في طلابك.<br><br>نتيجتك: ${score} من 15`;
+else if(score>=8) text=`أنت معلم مليء بالتحديات 💪<br>أنت معلم، وبالتالي يجب أن تملك القدرة الخارقة على تغيير كل شيء في لحظة واحدة، ولكنك تحتاج إلى قليل من العمل.<br><br>نتيجتك: ${score} من 15`;
+else text=`أنت القائد في صفك 👑<br>ولست معلمًا خارقًا بعد، لكن حتى القادة يحتاجون إلى وقت لتحسين أدواتهم.<br><br>نتيجتك: ${score} من 15`;
+const r=document.getElementById('result');r.innerHTML=text;r.style.display='block';r.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
